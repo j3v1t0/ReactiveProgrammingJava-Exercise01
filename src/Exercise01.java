@@ -66,5 +66,6 @@ public class Exercise01 {
                                 i -> i == u.getId()
                         ))
                 .forEach(System.out::println);
+
     }
 }
