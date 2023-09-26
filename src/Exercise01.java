@@ -25,5 +25,46 @@ public class Exercise01 {
                 .forEach(
                         e -> System.out.println(e)
                 );
+
+        //Print the first number in intNumbersStream that's greater than 5
+        //if nothing is found, print -1
+        System.out.println("Print the first number that's greater than 5");
+        Integer value1 = StreamSource.intNumbersStream()
+                .filter(number -> number > 5)
+                .findFirst()
+                .orElse(-1);
+        System.out.println(value1);
+
+        Integer value2 = StreamSource.intNumbersStream()
+                .filter(number -> number > 50)
+                .findFirst()
+                .orElse(-1);
+        System.out.println(value2);
+
+        //Print first names of all users in userStream
+        System.out.println("Print first names of all users");
+        StreamSource.userStream()
+                .map(user -> user.getFirstname())
+                .forEach(userName -> System.out.println(userName));
+
+        //Print first names in userStream for users that have IDs from number stream
+        System.out.println("Print first names in users that have IDs from number stream");
+        StreamSource.intNumbersStream()
+                .flatMap(id -> StreamSource.userStream().filter(user -> user.getId() == id))
+                .map(user -> user.getFirstname())
+                .forEach(userName -> System.out.println(userName));
+
+        System.out.println("Difference result with map");
+        StreamSource.intNumbersStream()
+                .flatMap(id -> StreamSource.userStream().filter(user -> user.getId() == id))
+                .forEach(userName -> System.out.println(userName));
+
+        System.out.println("2nd Form difference result");
+        StreamSource.userStream()
+                .filter(u ->
+                        StreamSource.intNumbersStream().anyMatch(
+                                i -> i == u.getId()
+                        ))
+                .forEach(System.out::println);
     }
 }
