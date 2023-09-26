@@ -54,6 +54,12 @@ public class Exercise01 {
                 .map(user -> user.getFirstname())
                 .forEach(userName -> System.out.println(userName));
 
+        System.out.println("Explaining by part");
+        var s = StreamSource.intNumbersStream();
+        var s1 = s.flatMap(id -> StreamSource.userStream().filter(user -> user.getId() == id));
+        var s2 = s1.map(user -> user.getFirstname());
+        s2.forEach(userName -> System.out.println(userName));
+
         System.out.println("Difference result with map");
         StreamSource.intNumbersStream()
                 .flatMap(id -> StreamSource.userStream().filter(user -> user.getId() == id))
